@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script type="text/javascript" 
+     src='https://www.google.com/jsapi?autoload={
+         "modules" : [{"name" : "visualization", 
+                       "version" : "1"
+                      }]
+         }'>
+    </script>
+    <script type="text/javascript">
+       google.load('visualization', '1.0', { 'packages': ['controls', 'corechart', 'table'] });
+    </script>
+
+    <script type="text/javascript">
+        google.setOnLoadCallback(drawVisualization);
+
+        function drawVisualization() {
+            node_cnt_chart = new google.visualization.ChartWrapper({
+                chartType : 'LineChart',
+                dataSourceUrl : '/cgi-bin/DatingGraphAnalyzer.py?qt=node_cnt',
+                containerId : 'node_cnt_chart',
+                options : { title: 'Node count of relationship graph',
+                            annotations: {alwaysOutside: true}, 
+                            vAxis: {title: 'Node Count'},
+                            hAxis: { title: 'Level' },
+                            pointSize: 5,
+                            curveType: 'function'
+                          }
+            });
+            node_cnt_chart.draw() ;
+
+            edge_cnt_chart = new google.visualization.ChartWrapper({
+                chartType : 'LineChart',
+                dataSourceUrl : '/cgi-bin/DatingGraphAnalyzer.py?qt=edge_cnt',
+                containerId : 'edge_cnt_chart',
+                options : { title: 'Edge count of relationship graph',
+                            annotations: {alwaysOutside: true}, 
+                            vAxis: {title: 'Edge Count'},
+                            hAxis: { title: 'Level' },
+                            pointSize: 5,
+                            curveType: 'function'
+                          }
+            });
+            edge_cnt_chart.draw() ;
+        }                               
+    </script>
+  </head>
+  <body>
+      <div id="node_cnt_chart" style="height: 100%; width: 100%; float: left;"></div>
+      <div id="edge_cnt_chart" style="height: 100%; width: 100%; float: left;"></div>
+  </body>
+</html>
